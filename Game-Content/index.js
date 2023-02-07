@@ -6,7 +6,7 @@ canvas.height = 576
 
 c.fillRect(0, 0, canvas.width, canvas.height)
 
-const gravity = 0.2
+const gravity = 0.5
 class Sprite {
     constructor({position, velocity}) {
         this.position = position
@@ -53,7 +53,7 @@ const enemy = new Sprite({
     }
 })
 
-console.log(player);
+console.log(player, enemy);
 
 const keys = {
     a: {
@@ -62,17 +62,15 @@ const keys = {
     d: {
         pressed: false
     },
-    w: {
+    ArrowRight: {
         pressed: false
     },
-    s: {
+    ArrowLeft: {
         pressed: false
     }
 }
 
-let lastKey
-
-function animate() {
+function animate() {  
     window.requestAnimationFrame(animate)
     c.fillStyle = 'black'
     c.fillRect(0, 0, canvas.width, canvas.height)
@@ -80,15 +78,29 @@ function animate() {
     enemy.update()
 
     player.velocity.x = 0
-    if(keys.a.pressed && lastKey === 'a') {
-        player.velocity.x = -1
-    }   else if (keys.d.pressed && lastKey === 'd') {
-        player.velocity.x = 1
-    }   else if (keys.w.pressed && lastKey === 'w') {
-        player.velocity.y = -1
-    }   else if (keys.s.pressed && lastKey === 's') {
-        player.velocity.y = 1
+    enemy.velocity.x = 0
+    // Player Movement
+    if(keys.a.pressed && player.lastKey === 'a') {
+        player.velocity.x = -3
+    }   else if (keys.d.pressed && player.lastKey === 'd') {
+        player.velocity.x = 3
+    }   else if (keys.w.pressed && player.lastKey === 'w') {
+        player.velocity.y = -10
+    }   else if (keys.s.pressed && player.lastKey === 's') {
+        player.velocity.y = 10
     }
+// Enemy Movement    
+    if(keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
+        enemy.velocity.x = -3
+    }   else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
+        enemy.velocity.x = 3
+    }   else if (keys.ArrowUp.pressed && enemy.lastKey === 'ArrowUp') {
+        enemy.velocity.y = -10
+    }   else if (keys.ArrowDown.pressed && enemy.lastKey === 'ArrowDown') {
+        enemy.velocity.y = 10
+    }
+    
+    
 }
 
 animate()
@@ -99,11 +111,11 @@ window.addEventListener('keydown', (event) => {
 // Player Controls        
         case 'd':
             keys.d.pressed = true
-            lastKey = 'd'
+            player.lastKey = 'd'
             break
         case 'a':
             keys.a.pressed = true
-            lastKey = 'a'            
+            player.lastKey = 'a'            
             break
         case 'w':
             keys.w.pressed = true
@@ -111,7 +123,7 @@ window.addEventListener('keydown', (event) => {
             break
         case 's':
             keys.s.pressed = true
-            lastKey = 's'            
+            player.lastKey = 's'            
             break
 
 // Enemy Controls
@@ -129,12 +141,14 @@ window.addEventListener('keydown', (event) => {
             break
         case 'ArrowDown':
             keys.ArrowDown.pressed = true
-            enemy.velocity.y = 10            
+            enemy.lastKey = 'ArrowDown'            
             break                       
     }
+    console.log(event.key)
 })
 window.addEventListener('keyup', (event) => {
     switch (event.key){
+// Player Controls
         case 'd':
             keys.d.pressed = false
             break
@@ -142,10 +156,26 @@ window.addEventListener('keyup', (event) => {
             keys.a.pressed = false
             break
         case 'w':
-            keys.w.pressed = false            
-            break    
+            keys.w.pressed = false
+            break
         case 's':
-            keys.s.pressed = false            
+            keys.s.pressed = false
+            break
+    }
+
+// Enemy Controls            
+    switch (event.key) {
+        case 'ArrowRight':
+            keys.ArrowRight.pressed = false
+            break
+        case 'ArrowLeft':
+            keys.ArrowLeft.pressed = false
+            break 
+        case 'ArrowLeft':
+            keys.ArrowUp.pressed = false
+            break
+        case 'ArrowRight':
+            keys.ArrowDown.pressed = false
             break     
     }
     console.log(event.key)
