@@ -60,6 +60,12 @@ const keys = {
     },
     d: {
         pressed: false
+    },
+    w: {
+        pressed: false
+    },
+    s: {
+        pressed: false
     }
 }
 
@@ -77,6 +83,10 @@ function animate() {
         player.velocity.x = -1
     }   else if (keys.d.pressed && lastKey === 'd') {
         player.velocity.x = 1
+    }   else if (keys.w.pressed && lastKey === 'w') {
+        player.velocity.y = -1
+    }   else if (keys.s.pressed && lastKey === 's') {
+        player.velocity.y = 1
     }
 }
 
@@ -92,6 +102,14 @@ window.addEventListener('keydown', (event) => {
             keys.a.pressed = true
             lastKey = 'a'            
             break
+        case 'w':
+            keys.w.pressed = true
+            lastKey = 'w'            
+            break
+        case 's':
+            keys.s.pressed = true
+            lastKey = 's'            
+            break                  
     }
 })
 window.addEventListener('keyup', (event) => {
@@ -102,6 +120,12 @@ window.addEventListener('keyup', (event) => {
         case 'a':
             keys.a.pressed = false
             break
+        case 'w':
+            keys.w.pressed = false            
+            break    
+        case 's':
+            keys.s.pressed = false            
+            break     
     }
     console.log(event.key)
 })
