@@ -15,6 +15,10 @@ class Sprite {
         c.fillStyle = 'green'
         c.fillRect(this.position.x, this.position.y, 50, 150)
     }
+    update(){
+        this.draw()
+        this.position.y += 10
+    }
 }
 
 
@@ -29,8 +33,6 @@ const player = new Sprite({
     }
 })
 
-player.draw()
-
 const enemy = new Sprite({
     position:{
         x: 400,
@@ -42,13 +44,14 @@ const enemy = new Sprite({
     }
 })
 
-enemy.draw()
-
 console.log(player);
 
 function animate() {
     window.requestAnimationFrame(animate)
-    console.log('testing')
+    c.fillStyle = 'black'
+    c.fillRect(0, 0, canvas.width, canvas.height)
+    player.update()
+    enemy.update()
 }
 
 animate()
