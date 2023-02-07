@@ -1,0 +1,6 @@
+1: Project Setup
+2: Create Player and Enemy
+3: Move Characters with Event Listeners 
+4: Attacks
+5: Health Bar Interface
+6: Game Timer and Game End
